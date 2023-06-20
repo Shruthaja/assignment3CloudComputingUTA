@@ -17,7 +17,7 @@ cursor = conn.cursor()
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
     result = []
-    r=""
+    r=''
     return render_template("index.html", result=result, r=r)
 
 if __name__ == '__main__':
