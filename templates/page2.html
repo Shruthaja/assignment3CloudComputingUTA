@@ -52,12 +52,14 @@
     <script>
 var data = [{
   x: {{r}},
-  y: {{result}},
+  y: {{result}},  mode: 'lines+markers',
+
   name:'Db',
   type: 'scatter'
 },{
  x: {{r}},
-  y: {{redis_time}},
+  y: {{redis_time}},  mode: 'lines+markers',
+
   name: 'Redis',
   type: 'scatter'
 }];
