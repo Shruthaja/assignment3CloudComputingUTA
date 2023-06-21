@@ -3,6 +3,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script>
     <link rel="stylesheet" type="text/css" href="static/style.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
@@ -26,33 +27,29 @@
     <form action="/" method="post">
 
     </form>
-    <div style="margin-top:3%;">
-        <table id="example" class="display" style="font-size:9px">
-            <thead>
+    <div style="margin-top:3%;" id='myDiv'>
 
-            </thead>
-            <tbody>
-            {% for i in result %}
-            <tr>
-                {% for j in i %}
-                <td>
-                    <div class=scrollable>{{j}}</div>
-                </td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
     </div>
 
 </div>
 
 <script>
-
-$('#example').DataTable();
-
-
-
+var data = [{
+  x: {{r}},
+  y: {{result}},
+  name:'Db',
+  type: 'scatter'
+},{
+ x: {{r}},
+  y: {{redis_time}},
+  name: 'Redis',
+  type: 'scatter'
+}];
+console.log(data);
+var layout = {
+  title: '1000 Random Tuples vs Time Taken To Fetch'
+};
+Plotly.newPlot('myDiv',data,layout);
 
 
 

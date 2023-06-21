@@ -3,6 +3,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script>
     <link rel="stylesheet" type="text/css" href="static/style.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
@@ -10,7 +11,7 @@
 </head>
 <body style="background-color:teal;">
 <ul>
-    <li><a href="/" >Home</a></li>
+    <li><a href="/">Home</a></li>
     <li><a href="/page2.html" class="active">Page2</a></li>
     <li><a href="/page3.html">Page3</a></li>
     <li><a href="/page4.html">Page4</a></li>
@@ -26,49 +27,49 @@
     <form action="/page2.html" method="post">
         <label>Create Box</label><br>
         <input name="lat" type="text" placeholder="Enter min lat">
-              <input name="lon" type="text" placeholder="Enter min lon">
+        <input name="lon" type="text" placeholder="Enter min lon">
 
-              <input name="mlat" type="text" placeholder="Enter max lat">
+        <input name="mlat" type="text" placeholder="Enter max lat">
 
-              <input name="mlon" type="text" placeholder="Enter max lon">
+        <input name="mlon" type="text" placeholder="Enter max lon">
 
         <input style="margin-top:2%" type="submit" placeholder="Click me!">
     </form>
-    <div style="margin-top:3%;">
-        <table id="example" class="display" style="font-size:9px">
-            <thead>
-            <th>city</th>
+    <form action="/page22.html" method="post">
+        <input name="smag" type="text" placeholder="Enter starting mag">
+        <input name="emag" type="text" placeholder="Enter ending mag">
+        <input style="margin-top:2%" type="submit" placeholder="Click me!">
+    </form>
 
-            <th>State</th>
-            <th>Population</th>
-            <th>lat</th>
-            <th>lon</th>
-            </thead>
-            <tbody>
-            {% for i in result %}
-            <tr>
-                {% for j in i %}
-                <td>
-                    <div class=scrollable>{{j}}</div>
-                </td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <form action="/page23.html" method="post">
+        <input name="lat1" type="text" placeholder="Enter min lat">
+        <input name="lon1" type="text" placeholder="Enter min lon">
+        <input name="range" type="text" placeholder="Enter Range">
+        <input style="margin-top:2%" type="submit" placeholder="Click me!">
+    </form>
+
+    <div style="margin-top:3%;" id="myDiv">
+
     </div>
 
-</div>
+    <script>
+var data = [{
+  x: {{r}},
+  y: {{result}},
+  name:'Db',
+  type: 'scatter'
+},{
+ x: {{r}},
+  y: {{redis_time}},
+  name: 'Redis',
+  type: 'scatter'
+}];
+console.log(data);
+var layout = {
+  title: '1000 Random Tuples vs Time Taken To Fetch'
+};
+Plotly.newPlot('myDiv',data,layout);
+    </script>
 
-<script>
-
-$('#example').DataTable();
-
-
-
-
-
-
-</script>
 </body>
 </html>
