@@ -17,7 +17,6 @@ conn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID=
 cursor = conn.cursor()
 
 red = redis.StrictRedis(host='testredisshruthaja.redis.cache.windows.net',port=6379, db=0, password='Y6DWGhZjh9rj00qePva4AgP9Fm9pN0R6kAzCaLeCErU=', ssl=False)
-red.set(10,"value")
 red.flushall()
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
@@ -29,7 +28,7 @@ def hello_world():
     for i in range(30):
         time_query.append(i+1)
     query_time = []
-    query = "SELECT TOP 1000 * FROM [dbo].[earthquake] TABLESAMPLE(3000 ROWS)"
+    query = "SELECT TOP 1000 * FROM [dbo].[earthquake]"
     for i in time_query:
         start = time.time()
         cursor.execute(query)
@@ -60,7 +59,7 @@ def page2():
         minlon = request.form['lon']
         maxlat = request.form['mlat']
         maxlon = request.form['mlon']
-        query = "select top(1000) * from dbo.earthquake TABLESAMPLE(3000 ROWS) where latitude between ? and ? and longitude between ? and ?"
+        query = "select top(1000) * from dbo.earthquake where latitude between ? and ? and longitude between ? and ?"
         time_query = []
         redis_time = []
         time_query = []
@@ -94,7 +93,7 @@ def page22():
     if request.method == "POST":
         smag = request.form['smag']
         emag = request.form['emag']
-        query = "select top(1000) * from dbo.earthquake where mag between ? and ? TABLESAMPLE(3000 ROWS);"
+        query = "select top(1000) * from dbo.earthquake where mag between ? and ? ;"
         for i in range(30):
             time_query.append(i + 1)
         query_time = []
@@ -126,7 +125,7 @@ def page23():
         lat = request.form['lat1']
         long = request.form['lon1']
         ran = request.form['range']
-        query = "select top(1000) * from dbo.earthquake TABLESAMPLE(3000 ROWS)  WHERE ( 6371 * ACOS(COS(RADIANS(latitude)) * COS(RADIANS(?)) * COS(RADIANS(longitude) - RADIANS(?)) + SIN(RADIANS(latitude)) * SIN(RADIANS(?)) ))< ?;"
+        query = "select top(1000) * from dbo.earthquake  WHERE ( 6371 * ACOS(COS(RADIANS(latitude)) * COS(RADIANS(?)) * COS(RADIANS(longitude) - RADIANS(?)) + SIN(RADIANS(latitude)) * SIN(RADIANS(?)) ))< ?;"
         time_query = []
         for i in range(30):
             time_query.append(i + 1)
