@@ -29,7 +29,7 @@ def hello_world():
     for i in range(30):
         time_query.append(i+1)
     query_time = []
-    query = "SELECT TOP 1000 * FROM [dbo].[earthquake] TABLESAMPLE(1000 ROWS)"
+    query = "SELECT TOP 1000 * FROM [dbo].[earthquake] TABLESAMPLE(3000 ROWS)"
     for i in time_query:
         start = time.time()
         cursor.execute(query)
@@ -60,7 +60,7 @@ def page2():
         minlon = request.form['lon']
         maxlat = request.form['mlat']
         maxlon = request.form['mlon']
-        query = "select top(1000) * from dbo.earthquake where latitude between ? and ? and longitude between ? and ? order by id  desc;"
+        query = "select top(1000) * from dbo.earthquake TABLESAMPLE(3000 ROWS) where latitude between ? and ? and longitude between ? and ?"
         time_query = []
         redis_time = []
         time_query = []
@@ -94,7 +94,7 @@ def page22():
     if request.method == "POST":
         smag = request.form['smag']
         emag = request.form['emag']
-        query = "select top(1000) * from dbo.earthquake where mag between ? and ? order by id  desc;"
+        query = "select top(1000) * from dbo.earthquake where mag between ? and ? TABLESAMPLE(3000 ROWS);"
         for i in range(30):
             time_query.append(i + 1)
         query_time = []
@@ -126,7 +126,7 @@ def page23():
         lat = request.form['lat1']
         long = request.form['lon1']
         ran = request.form['range']
-        query = "select top(1000) * from dbo.earthquake  WHERE ( 6371 * ACOS(COS(RADIANS(latitude)) * COS(RADIANS(?)) * COS(RADIANS(longitude) - RADIANS(?)) + SIN(RADIANS(latitude)) * SIN(RADIANS(?)) ))< ?;"
+        query = "select top(1000) * from dbo.earthquake TABLESAMPLE(3000 ROWS)  WHERE ( 6371 * ACOS(COS(RADIANS(latitude)) * COS(RADIANS(?)) * COS(RADIANS(longitude) - RADIANS(?)) + SIN(RADIANS(latitude)) * SIN(RADIANS(?)) ))< ?;"
         time_query = []
         for i in range(30):
             time_query.append(i + 1)
